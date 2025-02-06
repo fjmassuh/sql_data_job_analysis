@@ -1,43 +1,45 @@
 /*
-QUERY 1 🔎 : What are the top 5 paying Data Analyst jobs?
+QUERY 1 🔎 : What are the top paying Data Analyst jobs?
 ---------------------------------------------------------
-- Identifiy the top 5 highest-paying Data Analyst roles in the dataset. ✅
+- Identifiy the top 10 highest-paying Data Analyst roles in the dataset. ✅
 - Focus on job postings with specified salaries (remove nulls). ✅
 - We want to highlight the top top-paying opportunities for Data Analysts. 🎯
 */
 
 SELECT
     job_title,
-    job_title_short,
     job_location,
-    c.name AS company_name,
-    salary_year_avg,
-    job_schedule_type,
-    job_posted_date
+    company_dim.name AS company_name,
+    salary_year_avg
 FROM
-    job_postings_fact AS j
-LEFT JOIN /* Because we primarily care about data from the jobs_postings_fact table */
-    company_dim AS c
-    ON j.company_id = c.company_id
+    job_postings_fact
+LEFT JOIN
+    company_dim ON job_postings_fact.company_id = company_dim.company_id
 WHERE
     job_title_short = 'Data Analyst'
-    AND
-    salary_year_avg IS NOT NULL
-ORDER BY
-    salary_year_avg DESC
-LIMIT 5;
+    AND salary_year_avg IS NOT NULL
+ORDER BY salary_year_avg DESC
+LIMIT 10;
 
 /*
 INSIGHTS 💡 :
 -------------
-- In 2023, the highest paying salaries for Data Analysts ranged from $375K to $650K. Because these are
-    high-paying salaries, these roles are most-likely Senior Data Analyst roles (e.g Sr Data Analyst). 
-    An entry-level data analyst role would hold a salary significantly less than that of a Senior Data Analyst's.
+- Top-Paid Role: Data Analyst ($650K) leads the salary chart.
 
-- The companies that offer these opportunities are:
-    1. Mantys
-    2. ЛАНИТ
-    3. Illuminate Mission Solutions
-    4. Illuminate Mission Solutions
-    5. Torc Robotics
+- High Earners: Leadership roles (Directors, Heads) dominate top salaries.
+
+- Research Pays Well: Research Scientist ($285K) ranks high.
+
+- Broad Salary Range: From $175K to $650K,
+    showing strong variation by role and expertise.
+
+Learned:
+Breaking into data analytics can be highly rewarding, 
+with salaries ranging from $175K to $650K. 
+Leadership and specialized roles, such as Director of Analytics 
+or Research Scientist, command top pay, emphasizing the value of 
+expertise and strategic thinking. Strong technical skills in data analysis, 
+database management, and AI can open doors to high-paying opportunities. 
+If you're aiming for the top, focus on gaining experience, 
+technical proficiency, and business impact skills to stand out in this competitive field.
 */
